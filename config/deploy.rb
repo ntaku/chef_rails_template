@@ -28,20 +28,17 @@ set :linked_dirs, %w{bin log tmp/pids tmp/cache tmp/sockets vendor/bundle public
 
 namespace :deploy do
 
+  before :starting, :upload
   task :upload do
     on roles(:app) do |host|
       upload!('config/database.yml', "#{shared_path}/config/database.yml")
     end
   end
 
+  after :publishing, :restart
   task :restart do
-    on roles(:app), in: :sequence, wait: 5 do
-      invoke 'unicorn:restart'
-    end
+    invoke 'unicorn:restart'
   end
 
-  before :starting, :upload
-  after :publishing, :restart
   after :finishing, :cleanup
-
 end

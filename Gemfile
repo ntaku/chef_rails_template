@@ -17,6 +17,4 @@ group :deployment do
   gem 'capistrano-rvm'
   gem 'capistrano-rails', '~> 1.1'
   gem 'capistrano-bundler'
-
-#  gem 'capistrano_colors'
 end
